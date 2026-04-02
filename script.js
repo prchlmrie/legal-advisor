@@ -12,6 +12,7 @@
  * ============================================================
  */
 
+
 // ═══════════════════════════════════════════════════════════════
 // KNOWLEDGE BASE
 // Each rule:
@@ -532,8 +533,8 @@ const CATEGORY_MAP = {
 // ═══════════════════════════════════════════════════════════════
 // QUESTION FLOWS
 // One ordered list of questions per category key.
-// UI should walk through these one at a time and store
-// each answer into the facts object under the given key.
+// UI walks through these one at a time and stores each answer
+// into the facts object under the given key.
 //
 // question fields:
 //   key     — the fact key this answer will set
@@ -764,7 +765,7 @@ function conditionMatches(conditionValue, factValue) {
 // Filters rules to those whose category matches and whose every
 // condition is satisfied by the provided facts.
 //
-// @param  facts       — flat object of user answers (see FACTS SCHEMA)
+// @param  facts       — flat object of user answers
 // @param  categoryKey — one of the four valid category keys
 // @returns Array of matched rule objects (may be empty)
 // ═══════════════════════════════════════════════════════════════
@@ -807,4 +808,286 @@ function getNearestMisses(facts, categoryKey, topN = 3) {
     })
     .sort((a, b) => a.unmetCount - b.unmetCount)
     .slice(0, topN);
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// APPLICATION STATE
+// Tracks the current category, step index, collected facts,
+// and the active question list for the session.
+// ═══════════════════════════════════════════════════════════════
+
+let currentCategory = null;
+let currentStep     = 0;
+let facts           = {};
+let questions       = [];
+
+// Human-readable labels for each category key (used in modal header)
+const catLabels = {
+  "Dismissal":            "Dismissal & Termination",
+  "13th Month Pay":       "13th Month Pay",
+  "Overtime Pay":         "Overtime Pay",
+  "Night Shift & Leaves": "Night Shift & Leaves"
+};
+
+
+// ═══════════════════════════════════════════════════════════════
+// MODAL CONTROLS
+// Opens and closes the modal overlay, and binds close triggers:
+//   - Close button (✕)
+//   - Click outside the modal panel
+//   - Escape key
+// ═══════════════════════════════════════════════════════════════
+
+const overlay       = document.getElementById('modalOverlay');
+const modalBody     = document.getElementById('modalBody');
+const progressFill  = document.getElementById('progressFill');
+const modalProgress = document.getElementById('modalProgress');
+const modalLabel    = document.getElementById('modalLabel');
+const modalTitle    = document.getElementById('modalTitle');
+
+function openModal() {
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  overlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modalClose').addEventListener('click', closeModal);
+document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+// Close when clicking the dark backdrop (not the modal panel itself)
+overlay.addEventListener('click', function (e) {
+  if (e.target === overlay) closeModal();
+});
+
+// Close on Escape key
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') closeModal();
+});
+
+
+// ═══════════════════════════════════════════════════════════════
+// TOPIC CARD CLICK HANDLER
+// Initialises state for the selected category and opens the
+// modal to begin the question flow.
+// ═══════════════════════════════════════════════════════════════
+
+document.querySelectorAll('.topic-card').forEach(function (card) {
+  card.addEventListener('click', function () {
+    currentCategory = card.dataset.cat;
+    questions       = QUESTION_FLOWS[currentCategory];
+    currentStep     = 0;
+    facts           = {};
+
+    modalLabel.textContent = catLabels[currentCategory];
+    openModal();
+    renderStep();
+  });
+});
+
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER STEP
+// Renders the current question into the modal body.
+// If all questions have been answered, calls showResults().
+// Updates the progress bar and step counter on each render.
+// ═══════════════════════════════════════════════════════════════
+
+function renderStep() {
+  if (currentStep >= questions.length) {
+    showResults();
+    return;
+  }
+
+  const q   = questions[currentStep];
+  const pct = Math.round((currentStep / questions.length) * 100);
+
+  progressFill.style.width        = pct + '%';
+  modalProgress.textContent       = (currentStep + 1) + ' / ' + questions.length;
+  modalTitle.textContent          = q.text;
+  modalBody.innerHTML             = '';
+
+  // ── Yes / No ──
+  if (q.type === 'yesno') {
+    modalBody.innerHTML = `
+      <div class="btn-row">
+        <button class="btn-yn yes" onclick="answer('${q.key}', true)">Yes</button>
+        <button class="btn-yn no"  onclick="answer('${q.key}', false)">No</button>
+      </div>`;
+
+  // ── Select (multiple choice) ──
+  } else if (q.type === 'select') {
+    modalBody.innerHTML = q.options.map(function (opt) {
+      return `<button class="select-opt" onclick="answer('${q.key}', '${opt.value}')">${opt.label}</button>`;
+    }).join('');
+
+  // ── Number input ──
+  } else if (q.type === 'number') {
+    modalBody.innerHTML = `
+      <div class="number-row">
+        <input type="number" class="num-input" id="numInput" min="0" placeholder="0" />
+        <button class="btn-continue" onclick="submitNum('${q.key}')">Continue</button>
+      </div>`;
+
+    const ni = document.getElementById('numInput');
+    ni.focus();
+    ni.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') submitNum(q.key);
+    });
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// ANSWER HANDLERS
+// answer()    — for yesno and select questions
+// submitNum() — for number input questions
+// Both advance the step counter and re-render.
+// ═══════════════════════════════════════════════════════════════
+
+function answer(key, value) {
+  facts[key] = value;
+  currentStep++;
+  renderStep();
+}
+
+function submitNum(key) {
+  facts[key] = parseFloat(document.getElementById('numInput').value) || 0;
+  currentStep++;
+  renderStep();
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// SHOW RESULTS
+// Called after all questions are answered.
+// Runs the inference engine and routes to the correct
+// result builder based on how many rules matched.
+// ═══════════════════════════════════════════════════════════════
+
+function showResults() {
+  progressFill.style.width  = '100%';
+  modalProgress.textContent = 'Done';
+  modalTitle.textContent    = 'Your Results';
+
+  const matched = runInference(facts, currentCategory);
+
+  if (matched.length === 0) {
+    // No rule fired — show nearest-miss diagnostics
+    const misses = getNearestMisses(facts, currentCategory);
+    modalBody.innerHTML = buildNoMatch(misses);
+  } else if (matched.length === 1) {
+    // Exactly one rule fired
+    modalBody.innerHTML = buildResult(matched[0].result);
+  } else {
+    // Multiple rules fired — show tabbed view
+    modalBody.innerHTML = buildMultiResult(matched);
+  }
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// RESULT BUILDERS
+// buildResult()      — renders a single matched rule result
+// buildMultiResult() — renders tabbed view for multiple matches
+// buildNoMatch()     — renders near-miss diagnostics
+// ═══════════════════════════════════════════════════════════════
+
+function buildResult(res) {
+  return `
+    <div class="verdict-card ${res.tone}">
+      <div class="verdict-label-sm">Legal Finding</div>
+      <div class="verdict-text">${res.verdict}</div>
+    </div>
+    <div class="result-section">
+      <div class="result-section-label">Analysis</div>
+      <p>${res.advice}</p>
+      <div class="legal-cite">${res.legalBasis}</div>
+    </div>
+    <div class="result-section">
+      <div class="result-section-label">What to do</div>
+      <div class="action-block">${res.action}</div>
+    </div>`;
+}
+
+function buildMultiResult(matched) {
+  const tabs = matched.map(function (r, i) {
+    return `<button class="result-tab ${i === 0 ? 'active' : ''}" onclick="switchTab(${i})">${r.name}</button>`;
+  }).join('');
+
+  const panels = matched.map(function (r, i) {
+    return `<div id="rp-${i}" ${i !== 0 ? 'style="display:none"' : ''}>${buildResult(r.result)}</div>`;
+  }).join('');
+
+  return `
+    <p style="font-size:12px;color:#9ca3af;margin-bottom:10px;">
+      ${matched.length} applicable rules found based on your answers.
+    </p>
+    <div class="result-tabs">${tabs}</div>
+    ${panels}`;
+}
+
+function switchTab(idx) {
+  document.querySelectorAll('[id^="rp-"]').forEach(function (el, i) {
+    el.style.display = (i === idx) ? '' : 'none';
+  });
+  document.querySelectorAll('.result-tab').forEach(function (tab, i) {
+    tab.classList.toggle('active', i === idx);
+  });
+}
+
+function buildNoMatch(misses) {
+  const items = misses.map(function (m) {
+    const tags = m.unmetConditions.map(function (c) {
+      return `<span class="miss-tag">${c}</span>`;
+    }).join('');
+
+    return `
+      <div class="miss-item">
+        <div class="miss-name">
+          ${m.rule.name}
+          <span style="font-size:11px;font-weight:300;color:#9ca3af;">
+            (${m.unmetCount} condition${m.unmetCount !== 1 ? 's' : ''} unmet)
+          </span>
+        </div>
+        <div class="miss-tags">${tags}</div>
+      </div>`;
+  }).join('');
+
+  return `
+    <div class="no-match-box">
+      <h3>No exact rule matched</h3>
+      <p>
+        Based on your answers, no rule in the knowledge base was fully triggered.
+        The closest near-misses are shown below — review the unmet conditions to
+        understand what would change your result.
+      </p>
+      ${items}
+    </div>`;
+}
+
+
+// ═══════════════════════════════════════════════════════════════
+// RESET
+// Clears all state and closes the modal, returning the user
+// to the topic selection screen.
+// ═══════════════════════════════════════════════════════════════
+
+function resetAll() {
+  currentCategory       = null;
+  currentStep           = 0;
+  facts                 = {};
+  questions             = [];
+
+  progressFill.style.width  = '0%';
+  modalProgress.textContent = '';
+  modalLabel.textContent    = '';
+  modalTitle.textContent    = '';
+  modalBody.innerHTML       = '';
+
+  closeModal();
 }

@@ -4,19 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Legal Advisor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Welcome to Legal Advisor</h1>
+        <h1>Legal Advisor</h1>
+        <p class="subtitle">Philippine Labor Law Expert System</p>
     </header>
+
     <main>
-        <p>This is a basic web page for legal advice.</p>
-        <button id="adviceButton">Get Advice</button>
-        <div id="advice"></div>
+        <p class="intro">Select a topic below to check your rights under Philippine labor law.</p>
+
+        <div class="topic-grid" id="topicGrid">
+            <button class="topic-card" data-cat="Dismissal">
+                <span class="topic-icon">⚖</span>
+                <span class="topic-title">Dismissal &amp; Termination</span>
+                <span class="topic-ref">Art. 294, 297–299</span>
+            </button>
+            <button class="topic-card" data-cat="13th Month Pay">
+                <span class="topic-icon">₱</span>
+                <span class="topic-title">13th Month Pay</span>
+                <span class="topic-ref">P.D. 851</span>
+            </button>
+            <button class="topic-card" data-cat="Overtime Pay">
+                <span class="topic-icon">⏱</span>
+                <span class="topic-title">Overtime Pay</span>
+                <span class="topic-ref">Art. 87</span>
+            </button>
+            <button class="topic-card" data-cat="Night Shift &amp; Leaves">
+                <span class="topic-icon">🌙</span>
+                <span class="topic-title">Night Shift &amp; Leaves</span>
+                <span class="topic-ref">Art. 86, 95</span>
+            </button>
+        </div>
+
+        <p class="disclaimer">For educational purposes only. Not a substitute for professional legal advice.</p>
     </main>
 
-    
+    <!-- MODAL -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal" id="modal" role="dialog" aria-modal="true">
+            <div class="modal-header">
+                <div>
+                    <span class="modal-label" id="modalLabel">Topic</span>
+                    <h2 class="modal-title" id="modalTitle">Question</h2>
+                </div>
+                <div class="modal-header-right">
+                    <span class="modal-progress" id="modalProgress">1 / 9</span>
+                    <button class="modal-close" id="modalClose" aria-label="Close">&#x2715;</button>
+                </div>
+            </div>
+            <div class="modal-progress-bar"><div class="modal-progress-fill" id="progressFill"></div></div>
+            <div class="modal-body" id="modalBody"></div>
+            <div class="modal-footer">
+                <button class="btn-ghost" id="resetBtn">Start over</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="advice"></div>
     <script src="script.js"></script>
 </body>
 </html>
