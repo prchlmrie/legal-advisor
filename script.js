@@ -949,11 +949,6 @@ function renderStep() {
 // Both advance the step counter and re-render.
 // ═══════════════════════════════════════════════════════════════
 
-function answer(key, value) {
-  facts[key] = value;
-  currentStep++;
-  renderStep();
-}
 
 function submitNum(key) {
   facts[key] = parseFloat(document.getElementById('numInput').value) || 0;
@@ -1029,15 +1024,6 @@ function buildMultiResult(matched) {
     </p>
     <div class="result-tabs">${tabs}</div>
     ${panels}`;
-}
-
-function switchTab(idx) {
-  document.querySelectorAll('[id^="rp-"]').forEach(function (el, i) {
-    el.style.display = (i === idx) ? '' : 'none';
-  });
-  document.querySelectorAll('.result-tab').forEach(function (tab, i) {
-    tab.classList.toggle('active', i === idx);
-  });
 }
 
 function buildNoMatch(misses) {
