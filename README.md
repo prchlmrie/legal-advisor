@@ -1,13 +1,33 @@
 # LegalAdvisor
 
-Illegal Dismissal (Art. 294): Research "Just Causes" vs "Authorized Causes."
+LegalAdvisor is a simple web-based expert system prototype built as a school activity. It is a hardcoded rule-based system that mimics expert advice by checking a few fixed legal conditions and showing relevant information.
 
-Key Fact: Termination requires a "Notice to Explain" and a "Notice of Decision." If these aren't present, it's a procedural violation.
+This project was created as part of a 3-hour hands-on activity in class, where the goal was to research laws, write IF-THEN rules, and build a working prototype using HTML, CSS, and JavaScript.
 
-13th Month Pay (P.D. 851): * Key Fact: All rank-and-file employees who worked for at least 1 month in a calendar year are entitled to it.
+## Activity Overview
 
-Overtime Pay (Art. 87): * Key Fact: Work exceeding 8 hours a day gets an additional 25% of the hourly rate (30% if it's a rest day/holiday).
+- Build a simple expert system that gives legal advice on a chosen topic
+- Translate real labor laws into IF-THEN rules
+- Create a knowledge base, inference-style logic, and a user interface
+- Use plain web technologies for a quick prototype
 
-Night Shift Differential (Art. 86): * Key Fact: Extra 10% pay for work done between 10:00 PM and 6:00 AM.
+## Objectives
 
-Service Incentive Leave (Art. 95): * Key Fact: Employees who have served for at least 1 year are entitled to 5 days of paid leave.
+1. Understand basic expert system components: knowledge base, inference engine, and UI
+2. Translate real laws into simple IF-THEN rules
+3. Build a working prototype that asks questions and gives legal advice
+4. Present and demonstrate the system as a class project
+
+## Files
+
+- `index.html` — main interface
+- `styles.css` — page styling
+- `script.js` — hardcoded rule logic and interactivity
+- `README.md` — project summary and contributors
+
+## Contributors
+
+- Cheilou Puro (@prchlmrie)
+- Cyruz Porcopio (@sailikesrice)
+
+This project is based on a school activity and was built together as a simple expert-system prototype.
