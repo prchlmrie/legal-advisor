@@ -11,8 +11,8 @@
  *   - Service Incentive Leave               (Art. 95)
  * ============================================================
  */
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // KNOWLEDGE BASE
 // Each rule:
@@ -28,11 +28,11 @@
 //     .legalBasis — specific article / law citation
 //     .action     — what the user should do next
 // ═══════════════════════════════════════════════════════════════
-
+ 
 const KNOWLEDGE_BASE = [
-
+ 
   // ── DISMISSAL (Art. 294, 297–299) ──────────────────────────
-
+ 
   {
     id: "R001",
     category: "Dismissal",
@@ -58,7 +58,7 @@ const KNOWLEDGE_BASE = [
         "(Agabon doctrine) even if the dismissal is substantively valid."
     }
   },
-
+ 
   {
     id: "R002",
     category: "Dismissal",
@@ -81,7 +81,7 @@ const KNOWLEDGE_BASE = [
         "the employee's duties. Also confirm that the Two-Notice Rule was strictly followed."
     }
   },
-
+ 
   {
     id: "R003",
     category: "Dismissal",
@@ -106,7 +106,7 @@ const KNOWLEDGE_BASE = [
         "criteria (seniority, efficiency) in selecting who to retrench."
     }
   },
-
+ 
   {
     id: "R004",
     category: "Dismissal",
@@ -130,7 +130,7 @@ const KNOWLEDGE_BASE = [
         "1/2 month per year of service. If losses are not proven, the dismissal is illegal."
     }
   },
-
+ 
   {
     id: "R005",
     category: "Dismissal",
@@ -153,7 +153,7 @@ const KNOWLEDGE_BASE = [
         "of constructive dismissal up to finality of the decision."
     }
   },
-
+ 
   {
     id: "R006",
     category: "Dismissal",
@@ -177,9 +177,9 @@ const KNOWLEDGE_BASE = [
         "full backwages."
     }
   },
-
+ 
   // ── 13TH MONTH PAY (P.D. 851) ──────────────────────────────
-
+ 
   {
     id: "R007",
     category: "13th Month Pay",
@@ -203,7 +203,7 @@ const KNOWLEDGE_BASE = [
         "made on or before December 24 of each year."
     }
   },
-
+ 
   {
     id: "R008",
     category: "13th Month Pay",
@@ -226,7 +226,7 @@ const KNOWLEDGE_BASE = [
         "earnings. If your employer refuses, file a complaint with the DOLE Regional Office."
     }
   },
-
+ 
   {
     id: "R009",
     category: "13th Month Pay",
@@ -250,7 +250,7 @@ const KNOWLEDGE_BASE = [
         "controls your methods, you are an employee and ARE entitled to 13th month pay."
     }
   },
-
+ 
   {
     id: "R010",
     category: "13th Month Pay",
@@ -271,9 +271,9 @@ const KNOWLEDGE_BASE = [
         "basic salary from all premium pay. A lower-than-expected 13th month pay is legally correct."
     }
   },
-
+ 
   // ── OVERTIME PAY (Art. 87) ──────────────────────────────────
-
+ 
   {
     id: "R011",
     category: "Overtime Pay",
@@ -296,7 +296,7 @@ const KNOWLEDGE_BASE = [
         "Check your contract for discretionary bonuses in lieu of OT pay."
     }
   },
-
+ 
   {
     id: "R012",
     category: "Overtime Pay",
@@ -320,7 +320,7 @@ const KNOWLEDGE_BASE = [
         "timesheets as evidence."
     }
   },
-
+ 
   {
     id: "R013",
     category: "Overtime Pay",
@@ -344,7 +344,7 @@ const KNOWLEDGE_BASE = [
         "Ensure your payslip reflects this layered premium correctly."
     }
   },
-
+ 
   {
     id: "R014",
     category: "Overtime Pay",
@@ -367,7 +367,7 @@ const KNOWLEDGE_BASE = [
         "payslips and attendance records as evidence if your employer underpays."
     }
   },
-
+ 
   {
     id: "R015",
     category: "Overtime Pay",
@@ -392,9 +392,9 @@ const KNOWLEDGE_BASE = [
         "rate may constitute underpayment."
     }
   },
-
+ 
   // ── NIGHT SHIFT DIFFERENTIAL (Art. 86) ─────────────────────
-
+ 
   {
     id: "R016",
     category: "Night Shift Differential",
@@ -417,7 +417,7 @@ const KNOWLEDGE_BASE = [
         "before DOLE."
     }
   },
-
+ 
   {
     id: "R017",
     category: "Night Shift Differential",
@@ -439,9 +439,9 @@ const KNOWLEDGE_BASE = [
         "The 10% NSD always rides on the applicable day rate — not just the base rate."
     }
   },
-
+ 
   // ── SERVICE INCENTIVE LEAVE (Art. 95) ──────────────────────
-
+ 
   {
     id: "R018",
     category: "Service Incentive Leave",
@@ -466,7 +466,7 @@ const KNOWLEDGE_BASE = [
         "tracked in your leave records."
     }
   },
-
+ 
   {
     id: "R019",
     category: "Service Incentive Leave",
@@ -489,7 +489,7 @@ const KNOWLEDGE_BASE = [
         "5 are a benefit beyond the legal minimum."
     }
   },
-
+ 
   {
     id: "R020",
     category: "Service Incentive Leave",
@@ -512,24 +512,24 @@ const KNOWLEDGE_BASE = [
         "standards violation actionable before the DOLE Regional Office."
     }
   }
-
+ 
 ];
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // CATEGORY → RULE MAPPING
 // Maps the four user-facing category keys to the internal
 // rule categories used in the knowledge base.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 const CATEGORY_MAP = {
   "Dismissal":            ["Dismissal"],
   "13th Month Pay":       ["13th Month Pay"],
   "Overtime Pay":         ["Overtime Pay"],
   "Night Shift & Leaves": ["Night Shift Differential", "Service Incentive Leave"]
 };
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // QUESTION FLOWS
 // One ordered list of questions per category key.
@@ -542,9 +542,9 @@ const CATEGORY_MAP = {
 //   type    — "yesno" | "select" | "number"
 //   options — (select only) array of { label, value }
 // ═══════════════════════════════════════════════════════════════
-
+ 
 const QUESTION_FLOWS = {
-
+ 
   "Dismissal": [
     {
       key: "isTerminated",
@@ -599,7 +599,7 @@ const QUESTION_FLOWS = {
       type: "yesno"
     }
   ],
-
+ 
   "13th Month Pay": [
     {
       key: "isGovernmentEmployee",
@@ -647,7 +647,7 @@ const QUESTION_FLOWS = {
       type: "yesno"
     }
   ],
-
+ 
   "Overtime Pay": [
     {
       key: "workedOver8Hours",
@@ -685,7 +685,7 @@ const QUESTION_FLOWS = {
       type: "yesno"
     }
   ],
-
+ 
   "Night Shift & Leaves": [
     {
       key: "workedBetween10PMand6AM",
@@ -738,17 +738,17 @@ const QUESTION_FLOWS = {
       type: "yesno"
     }
   ]
-
+ 
 };
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // CONDITION MATCHER
 // Supports:
 //   • Exact match  — conditionValue === factValue
 //   • Range match  — { gte: N } and/or { lte: N }
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function conditionMatches(conditionValue, factValue) {
   if (typeof conditionValue === "object" && conditionValue !== null) {
     const n = Number(factValue);
@@ -758,8 +758,8 @@ function conditionMatches(conditionValue, factValue) {
   }
   return conditionValue === factValue;
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // INFERENCE ENGINE
 // Filters rules to those whose category matches and whose every
@@ -769,10 +769,10 @@ function conditionMatches(conditionValue, factValue) {
 // @param  categoryKey — one of the four valid category keys
 // @returns Array of matched rule objects (may be empty)
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function runInference(facts, categoryKey) {
   const allowedCategories = CATEGORY_MAP[categoryKey] || [];
-
+ 
   return KNOWLEDGE_BASE.filter(rule =>
     allowedCategories.includes(rule.category) &&
     Object.entries(rule.conditions).every(([key, conditionValue]) =>
@@ -780,8 +780,8 @@ function runInference(facts, categoryKey) {
     )
   );
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // NEAREST MISS DIAGNOSTICS
 // When runInference() returns an empty array, call this to find
@@ -793,35 +793,35 @@ function runInference(facts, categoryKey) {
 // @param  topN        — how many near-misses to return (default 3)
 // @returns Array of { rule, unmetCount, unmetConditions[] }
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function getNearestMisses(facts, categoryKey, topN = 3) {
   const allowedCategories = CATEGORY_MAP[categoryKey] || [];
-
+ 
   return KNOWLEDGE_BASE
     .filter(rule => allowedCategories.includes(rule.category))
     .map(rule => {
       const unmetConditions = Object.entries(rule.conditions)
         .filter(([key, conditionValue]) => !conditionMatches(conditionValue, facts[key]))
         .map(([key]) => key);
-
+ 
       return { rule, unmetCount: unmetConditions.length, unmetConditions };
     })
     .sort((a, b) => a.unmetCount - b.unmetCount)
     .slice(0, topN);
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // APPLICATION STATE
 // Tracks the current category, step index, collected facts,
 // and the active question list for the session.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 let currentCategory = null;
 let currentStep     = 0;
 let facts           = {};
 let questions       = [];
-
+ 
 // Human-readable labels for each category key (used in modal header)
 const catLabels = {
   "Dismissal":            "Dismissal & Termination",
@@ -829,8 +829,8 @@ const catLabels = {
   "Overtime Pay":         "Overtime Pay",
   "Night Shift & Leaves": "Night Shift & Leaves"
 };
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // MODAL CONTROLS
 // Opens and closes the modal overlay, and binds close triggers:
@@ -838,79 +838,79 @@ const catLabels = {
 //   - Click outside the modal panel
 //   - Escape key
 // ═══════════════════════════════════════════════════════════════
-
+ 
 const overlay       = document.getElementById('modalOverlay');
 const modalBody     = document.getElementById('modalBody');
 const progressFill  = document.getElementById('progressFill');
 const modalProgress = document.getElementById('modalProgress');
 const modalLabel    = document.getElementById('modalLabel');
 const modalTitle    = document.getElementById('modalTitle');
-
+ 
 function openModal() {
   overlay.classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
+ 
 function closeModal() {
   overlay.classList.remove('open');
   document.body.style.overflow = '';
 }
-
+ 
 document.getElementById('modalClose').addEventListener('click', closeModal);
 document.getElementById('resetBtn').addEventListener('click', resetAll);
-
+ 
 // Close when clicking the dark backdrop (not the modal panel itself)
 overlay.addEventListener('click', function (e) {
   if (e.target === overlay) closeModal();
 });
-
+ 
 // Close on Escape key
 document.addEventListener('keydown', function (e) {
   if (e.key === 'Escape') closeModal();
 });
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // TOPIC CARD CLICK HANDLER
 // Initialises state for the selected category and opens the
 // modal to begin the question flow.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 document.querySelectorAll('.topic-card').forEach(function (card) {
   card.addEventListener('click', function () {
     currentCategory = card.dataset.cat;
     questions       = QUESTION_FLOWS[currentCategory];
     currentStep     = 0;
     facts           = {};
-
+ 
     modalLabel.textContent = catLabels[currentCategory];
     openModal();
     renderStep();
   });
 });
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // RENDER STEP
 // Renders the current question into the modal body.
 // If all questions have been answered, calls showResults().
 // Updates the progress bar and step counter on each render.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function renderStep() {
   if (currentStep >= questions.length) {
     showResults();
     return;
   }
-
+ 
   const q   = questions[currentStep];
   const pct = Math.round((currentStep / questions.length) * 100);
-
+ 
   progressFill.style.width        = pct + '%';
   modalProgress.textContent       = (currentStep + 1) + ' / ' + questions.length;
   modalTitle.textContent          = q.text;
   modalBody.innerHTML             = '';
-
+ 
   // ── Yes / No ──
   if (q.type === 'yesno') {
     modalBody.innerHTML = `
@@ -918,13 +918,13 @@ function renderStep() {
         <button class="btn-yn yes" onclick="answer('${q.key}', true)">Yes</button>
         <button class="btn-yn no"  onclick="answer('${q.key}', false)">No</button>
       </div>`;
-
+ 
   // ── Select (multiple choice) ──
   } else if (q.type === 'select') {
     modalBody.innerHTML = q.options.map(function (opt) {
       return `<button class="select-opt" onclick="answer('${q.key}', '${opt.value}')">${opt.label}</button>`;
     }).join('');
-
+ 
   // ── Number input ──
   } else if (q.type === 'number') {
     modalBody.innerHTML = `
@@ -932,7 +932,7 @@ function renderStep() {
         <input type="number" class="num-input" id="numInput" min="0" placeholder="0" />
         <button class="btn-continue" onclick="submitNum('${q.key}')">Continue</button>
       </div>`;
-
+ 
     const ni = document.getElementById('numInput');
     ni.focus();
     ni.addEventListener('keydown', function (e) {
@@ -940,37 +940,42 @@ function renderStep() {
     });
   }
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // ANSWER HANDLERS
 // answer()    — for yesno and select questions
 // submitNum() — for number input questions
 // Both advance the step counter and re-render.
 // ═══════════════════════════════════════════════════════════════
-
-
+ 
+function answer(key, value) {
+  facts[key] = value;
+  currentStep++;
+  renderStep();
+}
+ 
 function submitNum(key) {
   facts[key] = parseFloat(document.getElementById('numInput').value) || 0;
   currentStep++;
   renderStep();
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // SHOW RESULTS
 // Called after all questions are answered.
 // Runs the inference engine and routes to the correct
 // result builder based on how many rules matched.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function showResults() {
   progressFill.style.width  = '100%';
   modalProgress.textContent = 'Done';
   modalTitle.textContent    = 'Your Results';
-
+ 
   const matched = runInference(facts, currentCategory);
-
+ 
   if (matched.length === 0) {
     // No rule fired — show nearest-miss diagnostics
     const misses = getNearestMisses(facts, currentCategory);
@@ -983,15 +988,15 @@ function showResults() {
     modalBody.innerHTML = buildMultiResult(matched);
   }
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // RESULT BUILDERS
 // buildResult()      — renders a single matched rule result
 // buildMultiResult() — renders tabbed view for multiple matches
 // buildNoMatch()     — renders near-miss diagnostics
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function buildResult(res) {
   return `
     <div class="verdict-card ${res.tone}">
@@ -1008,16 +1013,16 @@ function buildResult(res) {
       <div class="action-block">${res.action}</div>
     </div>`;
 }
-
+ 
 function buildMultiResult(matched) {
   const tabs = matched.map(function (r, i) {
     return `<button class="result-tab ${i === 0 ? 'active' : ''}" onclick="switchTab(${i})">${r.name}</button>`;
   }).join('');
-
+ 
   const panels = matched.map(function (r, i) {
     return `<div id="rp-${i}" ${i !== 0 ? 'style="display:none"' : ''}>${buildResult(r.result)}</div>`;
   }).join('');
-
+ 
   return `
     <p style="font-size:12px;color:#9ca3af;margin-bottom:10px;">
       ${matched.length} applicable rules found based on your answers.
@@ -1025,13 +1030,22 @@ function buildMultiResult(matched) {
     <div class="result-tabs">${tabs}</div>
     ${panels}`;
 }
-
+ 
+function switchTab(idx) {
+  document.querySelectorAll('[id^="rp-"]').forEach(function (el, i) {
+    el.style.display = (i === idx) ? '' : 'none';
+  });
+  document.querySelectorAll('.result-tab').forEach(function (tab, i) {
+    tab.classList.toggle('active', i === idx);
+  });
+}
+ 
 function buildNoMatch(misses) {
   const items = misses.map(function (m) {
     const tags = m.unmetConditions.map(function (c) {
       return `<span class="miss-tag">${c}</span>`;
     }).join('');
-
+ 
     return `
       <div class="miss-item">
         <div class="miss-name">
@@ -1043,7 +1057,7 @@ function buildNoMatch(misses) {
         <div class="miss-tags">${tags}</div>
       </div>`;
   }).join('');
-
+ 
   return `
     <div class="no-match-box">
       <h3>No exact rule matched</h3>
@@ -1055,25 +1069,25 @@ function buildNoMatch(misses) {
       ${items}
     </div>`;
 }
-
-
+ 
+ 
 // ═══════════════════════════════════════════════════════════════
 // RESET
 // Clears all state and closes the modal, returning the user
 // to the topic selection screen.
 // ═══════════════════════════════════════════════════════════════
-
+ 
 function resetAll() {
   currentCategory       = null;
   currentStep           = 0;
   facts                 = {};
   questions             = [];
-
+ 
   progressFill.style.width  = '0%';
   modalProgress.textContent = '';
   modalLabel.textContent    = '';
   modalTitle.textContent    = '';
   modalBody.innerHTML       = '';
-
+ 
   closeModal();
 }
